@@ -26,7 +26,7 @@ float findDispersion (const vector<int> & values) {
 		dispersionSumSquare += pow (*i - averageValue, 2) / numberOfValues;
 
 
-	return sqrt (dispersionSumSquare);
+	return dispersionSumSquare;
 }
 
 float findMedian (const vector<int> & values) {
@@ -122,7 +122,7 @@ float findAsimetria (const vector<int> & values) {
 	for (auto i = values.begin (); i != values.end (); ++i) 
 		asimetria += pow ((*i - averageValue), 3);
 	
-	//откуда эти magic numbers? 
+	//Г®ГІГЄГіГ¤Г  ГЅГІГЁ magic numbers? 
 	return asimetria / 100.0 / pow (findStandartDeviation (values), 3) - 3;
 }
 
@@ -151,7 +151,7 @@ void printConfidenceIntervalSrkv (const vector<int> & values) {
 
 //choose best option
 float findStandartError (const vector<int> & values) {
-	return findDispersion (values) / sqrt (numberOfValues);
+	return sqrt(findDispersion (values) / (numberOfValues));
 }
 
 float findStandartDeviation (const vector<int> & values) {
