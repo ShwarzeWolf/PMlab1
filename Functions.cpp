@@ -112,7 +112,7 @@ float findExcess (const vector<int> & values) {
 	for (auto i = values.begin (); i != values.end (); ++i)
 		excess += pow ((*i - averageValue), 4);
 	
-	return excess / 100.0 / pow (findStandartDeviation (values), 4);
+	return excess / 100.0 / pow (findStandartDeviation (values), 4) - 3;
 }
 
 float findAsimetria (const vector<int> & values) {
@@ -122,8 +122,7 @@ float findAsimetria (const vector<int> & values) {
 	for (auto i = values.begin (); i != values.end (); ++i) 
 		asimetria += pow ((*i - averageValue), 3);
 	
-	//îòêóäà ýòè magic numbers? 
-	return asimetria / 100.0 / pow (findStandartDeviation (values), 3) - 3;
+	return asimetria / 100.0 / pow (findStandartDeviation (values), 3);
 }
 
 
@@ -164,9 +163,8 @@ void printConfidenceIntervalSrkv (const vector<int> & values) {
 
 }
 
-void
-pirson (int a[100])
-{
+void pirson (int a[100])
+ 
   double PirsonKr = 65.41016;
   double b[6][47];
   SortArray (a);
