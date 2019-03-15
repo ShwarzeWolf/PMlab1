@@ -126,6 +126,22 @@ float findAsimetria (const vector<int> & values) {
 	return asimetria / 100.0 / pow (findStandartDeviation (values), 3) - 3;
 }
 
+
+float findStandartError (const vector<int> & values) {
+	return sqrt(findDispersion (values) / (numberOfValues));
+}
+
+float findStandartDeviation (const vector<int> & values) {
+	float standartDeviation = 0.0;
+	float averageValue = findAverageValue (values);
+
+	for (auto i = values.begin (); i != values.end (); ++i)
+		standartDeviation = standartDeviation + pow ((*i - averageValue), 2);
+
+	return sqrt (standartDeviation / 99.0);
+}
+
+
 void printConfidenceIntervalMat (const vector<int> & values) {
 	const float styudentCoefficient = 1.9842;
 	float averageValue = findAverageValue (values);
@@ -148,18 +164,48 @@ void printConfidenceIntervalSrkv (const vector<int> & values) {
 
 }
 
+void
+pirson (int a[100])
+{
+  double PirsonKr = 65.41016;
+  double b[6][47];
+  SortArray (a);
+  b[0][0] = a[0];
+  int k = 0;
+  int n = 1;
+  double aver = average (a);
+  for (int i = 1; i < 100; ++i)
+    {
+      if (a[i] != b[0][k])
+	{
+	  b[1][k] = n;
+	  ++k;
+	  b[0][k] = a[i];
+	  n = 0;
+	}
 
-//choose best option
-float findStandartError (const vector<int> & values) {
-	return sqrt(findDispersion (values) / (numberOfValues));
-}
+      if (a[i] == b[0][k])
+	++n;
+    }
+  b[1][46] = n;
 
-float findStandartDeviation (const vector<int> & values) {
-	float standartDeviation = 0.0;
-	float averageValue = findAverageValue (values);
+  for (int i = 0; i < 47; ++i)
+    {
+      b[2][i] = (b[0][i] - aver) / standart_deviation (a);
+      b[3][i] = 1 / sqrt (2 * M_PI) * pow (M_E, -pow ((b[2][i]), 2) / 2);
+      b[4][i] = 100 / standart_deviation (a) * b[3][i];
+      b[5][i] = pow ((b[1][i] - b[4][i]), 2) / b[4][i];
+    }
 
-	for (auto i = values.begin (); i != values.end (); ++i)
-		standartDeviation = standartDeviation + pow ((*i - averageValue), 2);
+  double PirsonNab = 0;
 
-	return sqrt (standartDeviation / 99.0);
+  for (int i = 0; i < 47; ++i)
+    PirsonNab = PirsonNab + b[5][i];
+  if (PirsonNab < PirsonKr)
+    cout B +"Satisfy";
+
+  else
+    cout B +"Does not satisfy";
+
+
 }
